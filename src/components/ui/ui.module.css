@@ -1,0 +1,580 @@
+/* ================================================================== grid == */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+  perspective: 1400px;
+}
+
+.sectionTitle {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sectionTitle::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong), transparent);
+}
+
+/* ================================================================== card == */
+
+.card {
+  position: relative;
+  grid-column: span 12;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(var(--blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(140%);
+  box-shadow: var(--shadow);
+  isolation: isolate;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s,
+    translate 0.4s var(--ease-out);
+}
+
+.card[data-span="3"] {
+  grid-column: span 3;
+}
+.card[data-span="4"] {
+  grid-column: span 4;
+}
+.card[data-span="5"] {
+  grid-column: span 5;
+}
+.card[data-span="6"] {
+  grid-column: span 6;
+}
+.card[data-span="7"] {
+  grid-column: span 7;
+}
+.card[data-span="8"] {
+  grid-column: span 8;
+}
+
+/* Cursor spotlight wash */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(480px circle at var(--mx, 50%) var(--my, -200px), var(--spotlight), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+
+/* Cursor-tracked border glow, masked to the 1px ring */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, -200px), var(--accent), transparent 65%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow), var(--glow);
+}
+
+.card:hover::before,
+.card:hover::after {
+  opacity: 1;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 20px 0;
+}
+
+.cardIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+
+.cardHeading {
+  flex: 1;
+  min-width: 0;
+}
+
+.cardTitle {
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.cardSubtitle {
+  margin-top: 2px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.cardActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cardBody {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  padding: 16px 20px 20px;
+  perspective: 800px;
+}
+
+.chartWrap,
+.tableWrap {
+  height: 100%;
+}
+
+.tableWrap {
+  max-height: 340px;
+  overflow: auto;
+}
+
+.iconButton {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.iconButton:hover,
+.iconButton[aria-pressed="true"] {
+  color: var(--text);
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+}
+
+/* ============================================================ data table == */
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.dataTable th,
+.dataTable td {
+  padding: 8px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--grid);
+  white-space: nowrap;
+}
+
+.dataTable th:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+.dataTable thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface-solid);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.dataTable tbody tr:hover {
+  background: var(--surface-2);
+}
+
+/* =========================================================== page header == */
+
+.pageHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 12px 0 28px;
+  will-change: transform, opacity;
+}
+
+.pageHeaderText {
+  max-width: 720px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pageTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.3rem);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: 1.05;
+}
+
+.wordMask {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.06em 0.04em 0.12em;
+  margin: -0.06em 0.1em -0.12em -0.04em;
+  vertical-align: bottom;
+}
+
+.word {
+  display: inline-block;
+  transform-origin: 0 100%;
+}
+
+.caret {
+  display: none;
+}
+
+.pageDescription {
+  margin-top: 12px;
+  font-size: 1rem;
+  color: var(--text-2);
+  max-width: 60ch;
+}
+
+.pageHeaderSlot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ============================================================= segmented == */
+
+.segmented {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(var(--blur));
+  -webkit-backdrop-filter: blur(var(--blur));
+}
+
+.segment {
+  position: relative;
+  height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-2);
+  font-size: 0.8rem;
+  font-weight: 550;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.segment[data-active="true"] {
+  color: var(--accent-ink);
+}
+
+.segmentActive {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  box-shadow: var(--glow);
+}
+
+.segmentLabel {
+  position: relative;
+}
+
+/* ================================================================= chips == */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.chip[aria-pressed="true"] {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+}
+
+.chipSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+
+.chip[aria-pressed="false"] .chipSwatch {
+  opacity: 0.3;
+  transform: scale(0.7);
+}
+
+/* ========================================================= status badge == */
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 9px 0 7px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--status-color) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--status-color) 40%, transparent);
+}
+
+.statusBadge[data-status="good"] {
+  --status-color: var(--good);
+}
+.statusBadge[data-status="warning"] {
+  --status-color: var(--warning);
+}
+.statusBadge[data-status="serious"] {
+  --status-color: var(--serious);
+}
+.statusBadge[data-status="critical"] {
+  --status-color: var(--critical);
+}
+
+.statusIcon {
+  color: var(--status-color);
+}
+
+.statusBadge[data-pulse="true"] .statusIcon {
+  animation: status-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  50% {
+    transform: scale(1.25);
+    filter: drop-shadow(0 0 4px var(--status-color));
+  }
+}
+
+@media (min-width: 1181px) {
+  .card[data-tall] {
+    grid-row: span 2;
+  }
+}
+
+/* ============================================================ responsive == */
+
+@media (max-width: 1180px) {
+  .card[data-span="3"],
+  .card[data-tile][data-span] {
+    grid-column: span 6;
+  }
+  .card[data-span="4"],
+  .card[data-span="5"],
+  .card[data-span="7"],
+  .card[data-span="8"] {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 720px) {
+  .grid {
+    gap: 14px;
+  }
+  .card[data-span] {
+    grid-column: span 12;
+  }
+}
+
+/* ======================================================= theme flavours == */
+
+:global([data-theme="synthwave"]) .card {
+  border-color: rgba(242, 54, 155, 0.22);
+  background:
+    linear-gradient(180deg, rgba(242, 54, 155, 0.06), transparent 40%),
+    var(--surface);
+}
+
+:global([data-theme="synthwave"]) .card > .cardHeader::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 18px;
+  right: 18px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f2369b, #0e9cc8, transparent);
+  box-shadow: 0 0 10px #f2369b;
+}
+
+:global([data-theme="synthwave"]) .cardTitle,
+:global([data-theme="synthwave"]) .sectionTitle {
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+:global([data-theme="synthwave"]) .pageTitle {
+  text-shadow: none;
+  filter: drop-shadow(0 0 18px rgba(242, 54, 155, 0.55)) drop-shadow(0 2px 0 #2b0a52);
+  font-style: italic;
+}
+
+/* Chrome gradient per word so it survives the per-word mask transforms. */
+:global([data-theme="synthwave"]) .word {
+  padding-right: 0.08em;
+  background: linear-gradient(180deg, #ffffff 0%, #ffe0f4 38%, #f2369b 54%, #ff9e3d 76%, #7b2ff7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+:global([data-theme="synthwave"]) .eyebrow {
+  border-color: #0e9cc8;
+  background: rgba(14, 156, 200, 0.12);
+  color: #7df9ff;
+  box-shadow: 0 0 14px rgba(14, 156, 200, 0.35);
+}
+
+:global([data-theme="crt"]) .card {
+  border-color: var(--border-strong);
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 4px var(--border),
+    var(--glow);
+}
+
+:global([data-theme="crt"]) .card::after {
+  display: none;
+}
+
+:global([data-theme="crt"]) .cardTitle::before {
+  content: "[ ";
+  color: var(--text-muted);
+}
+
+:global([data-theme="crt"]) .cardTitle::after {
+  content: " ]";
+  color: var(--text-muted);
+}
+
+:global([data-theme="crt"]) .cardTitle,
+:global([data-theme="crt"]) .sectionTitle,
+:global([data-theme="crt"]) .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+:global([data-theme="crt"]) .cardTitle {
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+:global([data-theme="crt"]) .cardIcon,
+:global([data-theme="crt"]) .iconButton,
+:global([data-theme="crt"]) .eyebrow,
+:global([data-theme="crt"]) .segmented,
+:global([data-theme="crt"]) .segment,
+:global([data-theme="crt"]) .chip,
+:global([data-theme="crt"]) .statusBadge {
+  border-radius: 0;
+}
+
+:global([data-theme="crt"]) .segment[data-active="true"] {
+  text-shadow: none;
+}
+
+:global([data-theme="crt"]) .pageTitle {
+  font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+  text-transform: uppercase;
+}
+
+:global([data-theme="crt"]) .caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.85em;
+  margin-left: 0.15em;
+  vertical-align: baseline;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  animation: caret-blink 1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
