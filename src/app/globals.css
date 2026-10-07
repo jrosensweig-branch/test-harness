@@ -1,0 +1,322 @@
+/* ==========================================================================
+   Theme tokens
+   Every component reads roles (surface, text, series-n...) — never raw hex —
+   so a theme is just a block of custom properties. Selectors are not scoped to
+   :root so the Theme Gallery can render live previews of any theme inline.
+   Categorical series steps were validated per surface (CVD + contrast).
+   ========================================================================== */
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0b0c10;
+  --surface: rgba(21, 23, 30, 0.72);
+  --surface-solid: #15171e;
+  --surface-2: #1d2029;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text: #f4f5f7;
+  --text-2: #b9bcc6;
+  --text-muted: #868a99;
+  --grid: #242733;
+  --axis: #373b4a;
+  --accent: #3987e5;
+  --accent-2: #8b7cf6;
+  --accent-ink: #ffffff;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --seq-0: #0d366b;
+  --seq-1: #104281;
+  --seq-2: #1c5cab;
+  --seq-3: #2a78d6;
+  --seq-4: #5598e7;
+  --seq-5: #86b6ef;
+  --seq-6: #cde2fb;
+  --success-text: #2fc42f;
+  --danger-text: #ff7b7b;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 48px -24px rgba(0, 0, 0, 0.7);
+  --glow: 0 0 0 transparent;
+  --text-glow: none;
+  --radius: 18px;
+  --radius-sm: 10px;
+  --blur: 18px;
+  --font-ui: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-ui);
+  --font-mono: var(--font-jbmono), ui-monospace, "SF Mono", Menlo, monospace;
+  --display-weight: 650;
+  --display-tracking: -0.03em;
+  --spotlight: rgba(120, 160, 255, 0.1);
+  --selection: rgba(57, 135, 229, 0.35);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f3ef;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-solid: #fcfcfb;
+  --surface-2: #f1f1ec;
+  --border: rgba(11, 11, 11, 0.08);
+  --border-strong: rgba(11, 11, 11, 0.16);
+  --text: #0b0b0b;
+  --text-2: #52514e;
+  --text-muted: #77756f;
+  --grid: #e8e7e1;
+  --axis: #c3c2b7;
+  --accent: #2a78d6;
+  --accent-2: #8a5cf6;
+  --accent-ink: #ffffff;
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --seq-0: #e6f0fc;
+  --seq-1: #b7d3f6;
+  --seq-2: #86b6ef;
+  --seq-3: #5598e7;
+  --seq-4: #2a78d6;
+  --seq-5: #1c5cab;
+  --seq-6: #0d366b;
+  --success-text: #006300;
+  --danger-text: #b42323;
+  --shadow: 0 1px 2px rgba(20, 20, 40, 0.04), 0 18px 40px -18px rgba(40, 40, 80, 0.18);
+  --glow: 0 0 0 transparent;
+  --text-glow: none;
+  --radius: 18px;
+  --radius-sm: 10px;
+  --blur: 18px;
+  --font-ui: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-ui);
+  --font-mono: var(--font-jbmono), ui-monospace, "SF Mono", Menlo, monospace;
+  --display-weight: 650;
+  --display-tracking: -0.03em;
+  --spotlight: rgba(42, 120, 214, 0.08);
+  --selection: rgba(42, 120, 214, 0.22);
+}
+
+[data-theme="synthwave"] {
+  color-scheme: dark;
+  --bg: #0d0221;
+  --surface: rgba(26, 16, 54, 0.84);
+  --surface-solid: #1a1036;
+  --surface-2: #26174f;
+  --border: rgba(242, 54, 155, 0.26);
+  --border-strong: rgba(14, 156, 200, 0.7);
+  --text: #fdf0ff;
+  --text-2: #d6bcf3;
+  --text-muted: #a08ac8;
+  --grid: #2c1b5a;
+  --axis: #47317d;
+  --accent: #f2369b;
+  --accent-2: #0e9cc8;
+  --accent-ink: #ffffff;
+  --series-1: #f2369b;
+  --series-2: #0e9cc8;
+  --series-3: #9b6bff;
+  --series-4: #e85d12;
+  --seq-0: #241046;
+  --seq-1: #3d1563;
+  --seq-2: #621c80;
+  --seq-3: #8f2394;
+  --seq-4: #c42b9a;
+  --seq-5: #f2369b;
+  --seq-6: #ff9fd6;
+  --success-text: #3ee0a0;
+  --danger-text: #ff7a9c;
+  --shadow: 0 0 0 1px rgba(242, 54, 155, 0.08), 0 24px 60px -24px rgba(0, 0, 0, 0.8);
+  --glow: 0 0 14px rgba(242, 54, 155, 0.35), 0 0 42px rgba(14, 156, 200, 0.12);
+  --text-glow: 0 0 10px rgba(242, 54, 155, 0.55);
+  --radius: 8px;
+  --radius-sm: 4px;
+  --blur: 10px;
+  --font-ui: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-orbitron), var(--font-ui);
+  --font-mono: var(--font-jbmono), ui-monospace, monospace;
+  --display-weight: 800;
+  --display-tracking: 0.04em;
+  --spotlight: rgba(242, 54, 155, 0.16);
+  --selection: rgba(242, 54, 155, 0.4);
+}
+
+[data-theme="crt"] {
+  color-scheme: dark;
+  --bg: #010402;
+  --surface: rgba(6, 16, 9, 0.88);
+  --surface-solid: #07110a;
+  --surface-2: #0c1e12;
+  --border: rgba(51, 255, 102, 0.2);
+  --border-strong: rgba(51, 255, 102, 0.55);
+  --text: #a6ffb8;
+  --text-2: #5fe383;
+  --text-muted: #37a556;
+  --grid: #0e2915;
+  --axis: #1b4a26;
+  --accent: #33ff66;
+  --accent-2: #c27c00;
+  --accent-ink: #010402;
+  --series-1: #1fa840;
+  --series-2: #2f7fe0;
+  --series-3: #c27c00;
+  --series-4: #d455c0;
+  --seq-0: #0a1f0f;
+  --seq-1: #0f3a1a;
+  --seq-2: #155a26;
+  --seq-3: #1d7d33;
+  --seq-4: #26a141;
+  --seq-5: #3fcf5c;
+  --seq-6: #a6ffb8;
+  --success-text: #33ff66;
+  --danger-text: #ff6b5b;
+  --shadow: 0 0 0 1px rgba(51, 255, 102, 0.05), 0 0 30px -10px rgba(51, 255, 102, 0.15);
+  --glow: 0 0 18px rgba(51, 255, 102, 0.12);
+  --text-glow: 0 0 2px rgba(166, 255, 184, 0.7), 0 0 10px rgba(51, 255, 102, 0.35);
+  --radius: 0px;
+  --radius-sm: 0px;
+  --blur: 0px;
+  --font-ui: var(--font-vt323), ui-monospace, monospace;
+  --font-display: var(--font-ui);
+  --font-mono: var(--font-ui);
+  --display-weight: 400;
+  --display-tracking: 0.02em;
+  --spotlight: rgba(51, 255, 102, 0.1);
+  --selection: rgba(51, 255, 102, 0.35);
+}
+
+/* Status palette is fixed across every theme and always ships with an icon + label. */
+:root {
+  --good: #0ca30c;
+  --warning: #fab219;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --sidebar-w: 248px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+html[data-theme="crt"] {
+  font-size: 19px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: var(--text-glow);
+  transition:
+    background-color 0.4s var(--ease-out),
+    color 0.4s var(--ease-out);
+}
+
+::selection {
+  background: var(--selection);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  text-shadow: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+[data-theme="crt"] :focus-visible {
+  outline-style: dashed;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Scrollbars that match the theme */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--axis) transparent;
+}
+
+/* ==========================================================================
+   Theme switch: circular reveal from the click point (View Transitions API)
+   ========================================================================== */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-reveal 720ms var(--ease-out);
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--reveal-x, 50%) var(--reveal-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--reveal-r, 150vmax) at var(--reveal-x, 50%) var(--reveal-y, 50%));
+  }
+}
+
+/* ==========================================================================
+   Reduced motion: keep the look, drop the movement
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}

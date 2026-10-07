@@ -1,0 +1,454 @@
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.plot {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.plot:focus-visible {
+  outline-offset: 4px;
+}
+
+.svg {
+  display: block;
+  overflow: visible;
+}
+
+/* Hairline, solid, recessive chrome */
+.gridline {
+  stroke: var(--grid);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.baseline {
+  stroke: var(--axis);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.axisLabel {
+  fill: var(--text-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.valueLabel,
+.endLabel {
+  fill: var(--text-2);
+  font-size: 11.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.line {
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dot {
+  stroke: var(--surface-solid);
+  stroke-width: 2;
+}
+
+.livePing {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.crosshair {
+  stroke: var(--axis);
+  stroke-width: 1;
+}
+
+/* ================================================================ legend == */
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: var(--text-2);
+}
+
+.legendKey {
+  flex: none;
+  display: inline-block;
+}
+
+.legendKey[data-shape="line"] {
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+}
+
+.legendKey[data-shape="rect"] {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.legendLabel {
+  color: var(--text-2);
+}
+
+.legendValue {
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* =============================================================== tooltip == */
+
+.tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  min-width: 140px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: color-mix(in srgb, var(--surface-solid) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    0 12px 32px -12px rgba(0, 0, 0, 0.45),
+    var(--glow);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.tooltipTitle {
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.tooltipRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.tooltipKey {
+  flex: none;
+}
+
+.tooltipKey[data-shape="line"] {
+  width: 12px;
+  height: 2px;
+  border-radius: 2px;
+}
+
+.tooltipKey[data-shape="rect"] {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.tooltipValue {
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltipLabel {
+  color: var(--text-2);
+}
+
+/* ================================================================= donut == */
+
+.donutLayout {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.donutFigure {
+  position: relative;
+  flex: none;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.donutSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.donutTrack {
+  stroke: var(--grid);
+  opacity: 0.5;
+}
+
+.donutArc {
+  cursor: pointer;
+}
+
+.donutCenter {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.donutValue {
+  font-size: 1.9rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.donutLabel {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.donutLegend {
+  flex: 1;
+  min-width: 180px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.donutLegendRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto 44px;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  cursor: default;
+  transition: background 0.2s;
+}
+
+.donutLegendRow[data-active="true"] {
+  background: var(--surface-2);
+}
+
+.donutLegendValue {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.donutLegendShare {
+  text-align: right;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ================================================================= gauge == */
+
+.gauge {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gaugeFigure {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.gaugeSvg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.gaugeTick {
+  stroke: var(--axis);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.gaugeSlo {
+  stroke: var(--text);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.gaugeReadout {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
+  text-align: center;
+}
+
+.gaugeValue {
+  font-size: 1.7rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.gaugeUnit {
+  margin-left: 3px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.gaugeCaption {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.gaugeFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gaugeLabel {
+  font-weight: 600;
+}
+
+/* =============================================================== heatmap == */
+
+.heatmap {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  align-items: center;
+}
+
+.heatmapRow {
+  display: contents;
+}
+
+.heatmapRowLabel {
+  padding-right: 10px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.heatmapColumnLabel {
+  padding-top: 4px;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.heatmapCell {
+  aspect-ratio: 1;
+  min-height: 10px;
+  border-radius: 3px;
+  transition: box-shadow 0.15s;
+}
+
+.heatmapCell[data-active="true"] {
+  box-shadow:
+    0 0 0 2px var(--surface-solid),
+    0 0 0 3.5px var(--text);
+  position: relative;
+  z-index: 1;
+}
+
+.scaleLegend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.scaleSwatch {
+  width: 18px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.scaleCaption {
+  margin-left: 8px;
+}
+
+/* ============================================================= sparkline == */
+
+.sparkline {
+  width: 100%;
+}
+
+.sparkline svg {
+  display: block;
+  overflow: visible;
+}
+
+.sparkLine {
+  stroke: var(--text-muted);
+  stroke-width: 1.75;
+  stroke-linecap: round;
+}
+
+.sparkArea {
+  fill: var(--text-muted);
+  fill-opacity: 0.1;
+}
+
+.sparkDot {
+  fill: var(--accent);
+  stroke: var(--surface-solid);
+  stroke-width: 2;
+}
+
+/* ======================================================= theme flavours == */
+
+:global([data-theme="synthwave"]) .line {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+:global([data-theme="crt"]) .heatmapCell,
+:global([data-theme="crt"]) .scaleSwatch,
+:global([data-theme="crt"]) .legendKey,
+:global([data-theme="crt"]) .tooltip {
+  border-radius: 0;
+}
+
+:global([data-theme="crt"]) .axisLabel,
+:global([data-theme="crt"]) .valueLabel,
+:global([data-theme="crt"]) .endLabel {
+  font-size: 14px;
+}
