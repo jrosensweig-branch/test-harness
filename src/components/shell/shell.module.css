@@ -389,6 +389,28 @@
   box-shadow: 0 0 10px var(--accent);
 }
 
+.helpButton {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-2);
+  cursor: pointer;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.helpButton:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  box-shadow: var(--glow);
+}
+
 /* ======================================================== theme switcher == */
 
 .themeSwitcher {
@@ -739,6 +761,7 @@
 }
 
 :global([data-theme="crt"]) .searchButton,
+:global([data-theme="crt"]) .helpButton,
 :global([data-theme="crt"]) .themeSwitcher,
 :global([data-theme="crt"]) .themeOption,
 :global([data-theme="crt"]) .liveBadge {

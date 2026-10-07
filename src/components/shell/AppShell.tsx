@@ -44,6 +44,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
+      // Modal experiences (the tour) own the keyboard while they're open.
+      if (document.querySelector("[data-blocks-shortcuts]")) return;
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
         event.preventDefault();
         setPaletteOpen((open) => !open);

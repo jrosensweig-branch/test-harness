@@ -3,6 +3,7 @@
 import { Search } from "lucide-react";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { usePathname } from "next/navigation";
+import { HelpButton } from "../help/HelpButton";
 import { navItemFor } from "./nav";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import styles from "./shell.module.css";
@@ -42,6 +43,7 @@ export function Topbar({ onOpenPalette }: { onOpenPalette: () => void }) {
           <span className={styles.liveDot} />
           Live
         </span>
+        <HelpButton />
         <ThemeSwitcher />
       </div>
 
