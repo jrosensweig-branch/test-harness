@@ -1,0 +1,752 @@
+/* ================================================================ layout == */
+
+.shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  min-height: 100vh;
+  transition: grid-template-columns 0.45s var(--ease-out);
+}
+
+.shell[data-collapsed="true"] {
+  --sidebar-w: 76px;
+}
+
+.main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 28px 32px 96px;
+}
+
+/* =============================================================== sidebar == */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 14px;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(var(--blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(140%);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 6px;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.brandMark {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: var(--surface-solid);
+  overflow: hidden;
+}
+
+.brandRing {
+  position: absolute;
+  inset: -40%;
+  background: conic-gradient(from 0deg, var(--accent), var(--accent-2), var(--series-3), var(--accent));
+  animation: spin 6s linear infinite;
+}
+
+.brandMark::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 9px;
+  background: var(--surface-solid);
+}
+
+.brandGlyph {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  stroke: var(--text);
+  stroke-dasharray: 40;
+  animation: pulse-line 2.6s var(--ease-out) infinite;
+}
+
+.brandPrompt {
+  display: none;
+  position: relative;
+  z-index: 1;
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-line {
+  0% {
+    stroke-dashoffset: 40;
+  }
+  60%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brandName {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 0.95rem;
+}
+
+.brandMeta {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navHeading {
+  padding: 0 10px 6px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.navItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.navItem:hover {
+  color: var(--text);
+}
+
+.navItem:hover .kbd {
+  opacity: 1;
+}
+
+.navItem[data-active="true"] {
+  color: var(--text);
+}
+
+.navActive {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.navActive::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.navIcon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+}
+
+.navLabel {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.navLabel .kbd {
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.sidebarFooter {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shortcutCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border-strong);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.collapseButton {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 36px;
+  margin-left: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-2);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.collapseButton:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 5px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-2);
+  line-height: 1;
+}
+
+/* ================================================================ topbar == */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(var(--blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(150%);
+}
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-size: 0.9rem;
+}
+
+.crumbRoot,
+.crumbSlash {
+  color: var(--text-muted);
+}
+
+.crumbCurrent {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 8px 0 12px;
+  min-width: 220px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.searchButton:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--glow);
+}
+
+.searchLabel {
+  flex: 1;
+  text-align: left;
+}
+
+.liveBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--good) 40%, transparent);
+  color: var(--text-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.liveDot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--good);
+}
+
+.liveDot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--good);
+  animation: ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.scrollProgress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* ======================================================== theme switcher == */
+
+.themeSwitcher {
+  display: flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.themeOption {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 28px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.themeOption:hover {
+  color: var(--text);
+}
+
+.themeOption[data-active="true"] {
+  color: var(--accent-ink);
+}
+
+.themeActive {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--accent);
+  box-shadow: var(--glow);
+}
+
+.themeIcon {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* ======================================================= command palette == */
+
+.paletteOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 12vh 16px 16px;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.palette {
+  width: min(640px, 100%);
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: calc(var(--radius) + 2px);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-solid);
+  box-shadow:
+    var(--shadow),
+    var(--glow),
+    0 40px 80px -20px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.paletteSearch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.paletteSearch input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+  text-shadow: inherit;
+}
+
+.paletteSearch input::placeholder {
+  color: var(--text-muted);
+}
+
+.paletteList {
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  overflow-y: auto;
+}
+
+.paletteGroup {
+  padding: 10px 10px 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.paletteItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-2);
+}
+
+.paletteItem[data-active="true"] {
+  color: var(--text);
+}
+
+.paletteHighlight {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.paletteIcon,
+.paletteLabel,
+.paletteHint,
+.paletteEnter {
+  position: relative;
+}
+
+.paletteIcon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.paletteLabel {
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.paletteHint {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.paletteMark {
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.paletteEmpty {
+  padding: 28px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.paletteFooter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.paletteFooter span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ========================================================== mobile dock == */
+
+.dock {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .shell,
+  .shell[data-collapsed="true"] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .content {
+    padding: 20px 16px 120px;
+  }
+
+  .searchButton {
+    min-width: 0;
+  }
+
+  .searchLabel,
+  .searchButton .kbd,
+  .liveBadge,
+  .crumbRoot,
+  .crumbSlash {
+    display: none;
+  }
+
+  .dock {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    z-index: 30;
+    display: flex;
+    gap: 4px;
+    padding: 6px;
+    translate: -50% 0;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur)) saturate(150%);
+    -webkit-backdrop-filter: blur(var(--blur)) saturate(150%);
+    box-shadow: var(--shadow), var(--glow);
+  }
+
+  .dockItem {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 44px;
+    border-radius: 999px;
+    color: var(--text-2);
+  }
+
+  .dockItem[data-active="true"] {
+    color: var(--accent-ink);
+  }
+
+  .dockActive {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--accent);
+  }
+
+  .dockIcon {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+}
+
+/* ======================================================= theme flavours == */
+
+:global([data-theme="synthwave"]) .brandName {
+  background: linear-gradient(180deg, #fff 0%, #ffd1f0 45%, #f2369b 55%, #7b2ff7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(242, 54, 155, 0.6));
+}
+
+:global([data-theme="synthwave"]) .navActive {
+  background: linear-gradient(90deg, rgba(242, 54, 155, 0.28), rgba(14, 156, 200, 0.12));
+  box-shadow:
+    inset 0 0 0 1px rgba(242, 54, 155, 0.55),
+    0 0 18px rgba(242, 54, 155, 0.35);
+}
+
+:global([data-theme="synthwave"]) .scrollProgress {
+  height: 3px;
+  background: linear-gradient(90deg, #f2369b, #ff9e3d, #0e9cc8);
+}
+
+:global([data-theme="crt"]) .brandGlyph,
+:global([data-theme="crt"]) .brandRing,
+:global([data-theme="crt"]) .brandMark::after {
+  display: none;
+}
+
+:global([data-theme="crt"]) .brandMark {
+  border: 1px solid var(--border-strong);
+}
+
+:global([data-theme="crt"]) .brandPrompt {
+  display: block;
+  animation: blink 1.1s steps(1) infinite;
+}
+
+:global([data-theme="crt"]) .navItem[data-active="true"],
+:global([data-theme="crt"]) .paletteItem[data-active="true"] {
+  color: var(--accent-ink);
+  text-shadow: none;
+}
+
+:global([data-theme="crt"]) .navActive,
+:global([data-theme="crt"]) .paletteHighlight {
+  background: var(--accent);
+  box-shadow: 0 0 16px rgba(51, 255, 102, 0.45);
+}
+
+:global([data-theme="crt"]) .paletteItem[data-active="true"] .paletteHint,
+:global([data-theme="crt"]) .paletteItem[data-active="true"] .paletteMark {
+  color: var(--accent-ink);
+}
+
+:global([data-theme="crt"]) .paletteItem[data-active="true"] .paletteIcon {
+  background: transparent;
+}
+
+:global([data-theme="crt"]) .navActive::before {
+  display: none;
+}
+
+:global([data-theme="crt"]) .kbd {
+  border-radius: 0;
+  font-size: 0.8rem;
+}
+
+:global([data-theme="crt"]) .searchButton,
+:global([data-theme="crt"]) .themeSwitcher,
+:global([data-theme="crt"]) .themeOption,
+:global([data-theme="crt"]) .liveBadge {
+  border-radius: 0;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
