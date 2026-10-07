@@ -1,0 +1,113 @@
+/* Miniature per-theme scenery (aurora blobs, synthwave sun + grid, CRT glass).
+   Keyed on data-variant rather than an ancestor data-theme so a preview of one
+   theme renders correctly while the page wears another. */
+
+.scenery {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.scenery > span {
+  position: absolute;
+  display: none;
+}
+
+.blob {
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.55;
+  animation: float 9s ease-in-out infinite alternate;
+}
+
+.blob:first-child {
+  top: -20%;
+  left: -10%;
+  background: radial-gradient(circle, #2a5fd6, transparent 65%);
+}
+
+.blob:nth-child(2) {
+  bottom: -30%;
+  right: -10%;
+  background: radial-gradient(circle, #7c3aed, transparent 65%);
+  animation-duration: 12s;
+}
+
+@keyframes float {
+  to {
+    transform: translate(12%, 8%) scale(1.1);
+  }
+}
+
+.scenery[data-variant="dark"] .blob,
+.scenery[data-variant="light"] .blob {
+  display: block;
+}
+
+.scenery[data-variant="light"] .blob:first-child {
+  background: radial-gradient(circle, #b9d4fb, transparent 65%);
+  opacity: 0.9;
+}
+
+.scenery[data-variant="light"] .blob:nth-child(2) {
+  background: radial-gradient(circle, #f6d0c2, transparent 65%);
+  opacity: 0.9;
+}
+
+.scenery[data-variant="synthwave"] {
+  background: linear-gradient(to bottom, #0d0221 0%, #2a0752 55%, #0d0221 62%);
+}
+
+.scenery[data-variant="synthwave"] .sun,
+.scenery[data-variant="synthwave"] .floor,
+.scenery[data-variant="crt"] .scan {
+  display: block;
+}
+
+.sun {
+  left: 50%;
+  top: 60%;
+  width: 34%;
+  aspect-ratio: 1;
+  translate: -50% -80%;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #ffe066, #ff9e3d 32%, #ff2975 62%, #b0137c);
+  box-shadow: 0 0 40px rgba(255, 41, 117, 0.6);
+  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 52%, transparent 58%, #000 58%, #000 66%, transparent 66%, transparent 72%, #000 72%);
+  mask-image: linear-gradient(to bottom, #000 52%, transparent 52%, transparent 58%, #000 58%, #000 66%, transparent 66%, transparent 72%, #000 72%);
+}
+
+.floor {
+  left: -50%;
+  right: -50%;
+  top: 60%;
+  height: 80%;
+  border-top: 2px solid #ff4fd8;
+  box-shadow: 0 -2px 16px #ff2fa8;
+  background-color: #12032b;
+  background-image:
+    linear-gradient(to right, rgba(255, 47, 168, 0.7) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(125, 249, 255, 0.5) 1px, transparent 1px);
+  background-size: 28px 28px;
+  transform: perspective(120px) rotateX(55deg);
+  transform-origin: top;
+  animation: mini-grid 1.2s linear infinite;
+}
+
+@keyframes mini-grid {
+  to {
+    background-position: 0 28px;
+  }
+}
+
+.scan {
+  inset: 0;
+  z-index: 5;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.3) 3px, transparent 4px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.7));
+  pointer-events: none;
+}
